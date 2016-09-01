@@ -1,0 +1,72 @@
+module maple-example-api {
+    yang-version 1;
+    namespace "urn:fast:examples:maple:api";
+    prefix "fast-maple-example-api";
+
+    import ietf-yang-types {
+        prefix yang; revision-date "2010-09-24";
+    }
+
+    revision "2015-12-17" {
+        description "Initial revision of FAST MAPLE system API";
+    }
+
+    container root {
+        container subtree {
+            leaf tree-leaf {
+                type string;
+            }
+        }
+
+        list list-with-key {
+            key id;
+
+            leaf id {
+                type string;
+            }
+        }
+    }
+
+    augment "/root/list-with-key" {
+        leaf data {
+            type string;
+        }
+    }
+
+    rpc test {
+        input {
+            leaf name {
+                type string;
+            }
+        }
+        output {
+            leaf result {
+                type string;
+            }
+        }
+    }
+
+    rpc setup-path {
+        input {
+            leaf "source" {
+                type yang:mac-address;
+            }
+
+            leaf "destination" {
+                type yang:mac-address;
+            }
+        }
+    }
+
+    rpc rsa {
+        input{
+            leaf "source" {
+                type string;
+            }
+
+            leaf "destination" {
+                type string;
+            }
+        }
+    }
+}

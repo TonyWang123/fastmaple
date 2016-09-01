@@ -1,0 +1,42 @@
+module fast-maple-example {
+    yang-version 1;
+    namespace "urn:fast:examples:maple";
+    prefix "fast-maple-example";
+
+    import config {
+        prefix config;
+        revision-date 2013-04-05;
+    }
+
+    import fast-system {
+        prefix fast-system;
+        revision-date 2015-12-17;
+    }
+
+    description
+        "Service definition for fast-system project";
+
+    revision "2015-12-17" {
+        description
+            "Initial revision";
+    }
+
+    identity fast-maple-example {
+        base config:module-type;
+        config:java-name-prefix fastMapleExample;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+        case fast-maple-example {
+            when "/config:modules/config:module/config:type = 'fast-maple-example'";
+            container fast-system {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity fast-system:fast-system;
+                    }
+                }
+            }
+        }
+    }
+}
